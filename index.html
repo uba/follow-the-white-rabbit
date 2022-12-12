@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>🐇 follow-the-white-rabbit </title>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="follow-the-white-rabbit. A Random Quote Machine.">
+    <meta name="author" content="Douglas Uba">
+  </head>
+  <style>
+    body, canvas {
+      margin: 0;
+      cursor: grab;
+      background-color: black;
+    }
+    canvas {
+      display: block;
+    }
+    #typewriter {
+      position: absolute;
+      background-color: #0c530c99;
+      top: 50%;
+      left: 50%;
+      padding: 4px;
+      border-radius: 8px;
+      max-width: 400px;
+      margin-right: -50%;
+      transform: translate(-50%, -50%);
+      font-size: 18px;
+      color: #ffffff;
+      text-shadow: 2px 2px #0c530c;
+      font-family: monospace;
+      -webkit-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+    }
+  </style>
+  <body>
+    <canvas id="canvas"></canvas>
+    <div id="typewriter"></div>
+    <script src="https://cdn.jsdelivr.net/npm/cmatrix"></script>
+    <script src="https://unpkg.com/typewriter-effect@latest/dist/core.js"></script>
+    <script type="text/javascript">
+      function createMatrix() {
+        matrix(canvas, {
+          exit: false,
+          font_size: 12
+        });
+      }
+    </script>
+    <script type="text/javascript">
+      createMatrix();
+      var app = document.getElementById('typewriter');
+      var typewriter = new Typewriter(app, {
+        loop: false,
+        delay: 80,
+      });
+      function getQuote() {
+        const xhr = new XMLHttpRequest();
+        xhr.open('GET', 'https://api.quotable.io/random', true);
+        xhr.responseType = 'json';
+        xhr.onload = (e) => {
+          if(xhr.readyState === 4 && xhr.status === 200) {
+            typewriter
+              .deleteAll(1)
+              .typeString('"' + xhr.response.content + '" ')
+              .typeString('<br><strong>' + xhr.response.author + '</strong>')
+              .start()
+              .pauseFor(xhr.response.content.length * 40)
+              .callFunction(getQuote);
+          }
+        };
+        xhr.send(null);
+      }
+      window.load = getQuote();
+    </script>
+  </body>
+</html>
