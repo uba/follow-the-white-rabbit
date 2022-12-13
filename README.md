@@ -1,7 +1,9 @@
 # follow-the-white-rabbit 🐇
 A Random Quote Machine using "The Matrix" Theme.
 
-Link: https://uba.github.io/follow-the-white-rabbit
+<img src="preview.gif" width="400" >
+
+Access: https://uba.github.io/follow-the-white-rabbit
 
 Using: 
   * CMatrix - Matrix effect in JavaScript - https://github.com/jcubic/cmatrix
